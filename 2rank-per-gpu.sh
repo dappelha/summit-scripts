@@ -17,7 +17,6 @@ let ranks_per_socket=$ranks_per_rs*$rs_per_socket
 # There are 21 (of 22) cores available to the application per socket (on Summit)
 let cores_per_rank=21/$ranks_per_socket # 21 avail cores divided into the ranks.
 let cores_per_rs=$cores_per_rank*$ranks_per_rs
-let nmpi=2*$ranks_per_socket*$nodes  # total number of mpi ranks
 let nrs=2*$rs_per_socket*$nodes # total number of resource sets:
 let threads_per_rank=$threads_per_core*$cores_per_rank
 

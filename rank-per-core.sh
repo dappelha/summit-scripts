@@ -63,7 +63,7 @@ jsrun --stdio_mode=prepend -D CUDA_VISIBLE_DEVICES \
   --cpu_per_rs ${cores_per_socket} \
   --gpu_per_rs ${gpus_per_socket} \
   --bind=proportional-packed:${cores_per_rank} \
-  -d plane:${cores_per_rank}  \
+  -d plane:${ranks_per_socket} \
   ./print-affinity.sh 
 
 EOF
