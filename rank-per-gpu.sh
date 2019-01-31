@@ -33,16 +33,12 @@ cat >batch.job <<EOF
 #BSUB -nnodes ${nodes}
 ##BSUB -alloc_flags gpumps
 #BSUB -alloc_flags smt2
-#BSUB -P VEN201
-#BSUB -q batch
+#BSUB -q excl
 #BSUB -W 5
 #---------------------------------------
-
-ulimit -s 10240
-
 export OMP_NUM_THREADS=$threads_per_rank
 
-export OMPI_LD_PRELOAD_POSTPEND=/ccs/home/walkup/mpitrace/spectrum_mpi/libmpitrace.so
+export OMPI_LD_PRELOAD_POSTPEND=$MPI_ROOT/lib/libmpitrace.so
 
 export OMP_STACKSIZE=64M
 export PAMI_ENABLE_STRIPING=1
@@ -66,4 +62,7 @@ jsrun --stdio_mode=prepend -D CUDA_VISIBLE_DEVICES \
 
 EOF
 #-----This part submits the script you just created--------------
-bsub  batch.job
+# on WSC
+bsub <  batch.job
+# on Summit
+#bsub  batch.job

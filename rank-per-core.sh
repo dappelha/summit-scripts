@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-# Example setup for running jsrun with 1 rank per core on Summit.
+# Example setup for running jsrun with 1 rank per core on WSC
 # This script creates a batch.job file and submits it to the que.
 # It is best to edit this file, never the batch.job file.
 
@@ -34,15 +34,10 @@ cat >batch.job <<EOF
 #BSUB -o %J.out
 #BSUB -e %J.err
 #BSUB -nnodes ${nodes}
-##BSUB -alloc_flags gpumps
 #BSUB -alloc_flags smt4
-#BSUB -P VEN201
-#BSUB -q batch
+#BSUB -q excl
 #BSUB -W 5
 #---------------------------------------
-
-ulimit -s 10240
-
 export OMP_NUM_THREADS=$threads_per_rank
 
 echo 'starting jsrun with'
@@ -68,5 +63,7 @@ jsrun --stdio_mode=prepend -D CUDA_VISIBLE_DEVICES \
 
 EOF
 #---------------------------------------
-# SUMMIT:
-bsub batch.job
+# on WSC
+bsub < batch.job
+# on SUMMIT:
+#bsub batch.job
